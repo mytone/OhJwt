@@ -43,7 +43,10 @@ namespace OhJwt.Controllers
             var claims = new Claim[]
             {
                 new Claim("userid", userid),
-                new Claim("user",user)
+                new Claim("user", user),
+
+                new Claim(ClaimTypes.Role,"Admin")   //add to roles of mirosoft system 
+
             };
             SecurityToken securityToken = new JwtSecurityToken(
                 issuer:issuer,
