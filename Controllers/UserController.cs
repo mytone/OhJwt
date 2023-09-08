@@ -13,7 +13,14 @@ namespace OhJwt.Controllers
     public class UserController : ControllerBase
     {
 
-
+        /// <summary>
+        /// 
+        /// user login and response his token 
+        /// 
+        /// </summary>
+        /// <param name="user"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
         [HttpGet("Login")]
         public ActionResult Login(string user, string password)
         {
@@ -22,18 +29,23 @@ namespace OhJwt.Controllers
                 return Ok("Error!");
             }
             string userid = "55";
-            string token=GenerateToke(userid,user,password);
+
+            string rolez = "admin"; // or main , common
+
+            string token=GenerateToke(userid,user,password,rolez);
             return Ok(token);
         }
 
         /// <summary>
-        /// function deal token and return token
+        /// 
+        /// made token and return token.  function.
+        /// 
         /// </summary>
         /// <param name="userid"></param>
         /// <param name="user"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        private string GenerateToke(string userid,string user, string password)
+        private string GenerateToke(string userid,string user, string password,string rolez)
         {
             string secret = "1235234242384721424214328789"; //token , key must >16 chars
             string issuer = "mytone";
@@ -44,8 +56,7 @@ namespace OhJwt.Controllers
             {
                 new Claim("userid", userid),
                 new Claim("user", user),
-
-                new Claim(ClaimTypes.Role,"Admin")   //add to roles of mirosoft system 
+                new Claim(ClaimTypes.Role,rolez)   //add to roles of mirosoft system 
 
             };
             SecurityToken securityToken = new JwtSecurityToken(

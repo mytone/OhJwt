@@ -29,17 +29,16 @@ public class Startup
         services.AddControllers();
 
         #region
-        string secret = "1235234242384721424214328789";   //token , key must >16 chars
-        string issuer = "mytone";
+        string secret   = "1235234242384721424214328789";   //token password key  , key must >16 chars
+        string issuer   = "mytone";
         string audience = "mytoneto";
-        services.AddAuthentication("Bearer")
-                .AddJwtBearer(options =>
+        services.AddAuthentication("Bearer").AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret)),
-                        ValidateIssuer = true,  //是否验证颁发者
+                        ValidateIssuer = true,     //是否验证颁发者
                         ValidIssuer = issuer,
                         ValidateAudience = true,
                         ValidAudience = audience,
@@ -83,13 +82,9 @@ public class Startup
 
 
         app.UseStaticFiles();
-
-
-
         app.UseRouting();
 
-
-        app.UseAuthentication();
+        app.UseAuthentication(); //token
         app.UseAuthorization();
 
         app.UseEndpoints(endpoints =>
