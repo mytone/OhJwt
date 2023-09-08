@@ -5,8 +5,8 @@ using System.Diagnostics.Eventing.Reader;
 
 namespace OhJwt.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    [Route("[controller]")]
+    //[ApiController]
     [Authorize]
     public class ProductController : Controller
     {

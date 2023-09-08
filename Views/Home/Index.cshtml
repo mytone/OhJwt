@@ -2,7 +2,77 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+
+
+<div class="">
+    <input class="form-control" type="text" id="user" />
+    <br/>
+    <input class="form-control" type="text" id="password" />
+    <br/>
+    <button class="btn btn-danger" id="subb">submit</button>
+    <button class="btn btn-success" id="deltoken">delete token</button>
 </div>
+
+<div id="tokentext">
+
+</div>
+
+<div class="row-cols-12" id="havetoken">
+
+</div>
+
+<script type="text/javascript" language="JavaScript">
+
+    ////login to server and response token , take token to localstorage and div
+    $("#subb").click(function () {
+        let userm = $("#user").val();
+        let passwordm = $("#password").val();
+        $.ajax({
+            //data: {user:userm,password:passwordm},
+            url: "/api/user/login?user=" + userm + "&password=" + passwordm,
+            type:"get",
+            dataType: "text",
+            success: function (res) {
+                localStorage.setItem("tokenzxs", res);
+                $("#tokentext").html(res);
+            },
+        });
+    });
+
+
+    ///destory token 
+    $("#deltoken").click(function () {
+        localStorage.removeItem("tokenzxs");
+
+        $.ajax({
+            contenType: "application/json; charset=utf-8",
+            headers: {
+                "Authorization": "Bearer" + ' ' + localStorage.getItem("tokenzxs")
+            },
+            type: "get",
+            url: "/product/adminproduct",
+            dataType: "text",
+            success: function (res) {
+                $("#havetoken").html(res)
+            }
+        });
+    });
+
+    
+    $.ajax({
+        contenType: "application/json; charset=utf-8",
+        headers: {
+            "Authorization": "Bearer"+' '+ localStorage.getItem("tokenzxs")
+        },
+        type: "get",
+        url: "/product/adminproduct",
+        dataType:"text",
+        success: function (res) {
+            $("#havetoken").html(res)
+        }
+    });
+
+
+</script>

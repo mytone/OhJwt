@@ -29,8 +29,7 @@ namespace OhJwt.Controllers
                 return Ok("Error!");
             }
             string userid = "55";
-
-            string rolez = "admin"; // or main , common
+            string rolez = "Admin"; // or main , common
 
             string token=GenerateToke(userid,user,password,rolez);
             return Ok(token);
@@ -56,7 +55,7 @@ namespace OhJwt.Controllers
             {
                 new Claim("userid", userid),
                 new Claim("user", user),
-                new Claim(ClaimTypes.Role,rolez)   //add to roles of mirosoft system 
+                new Claim(ClaimTypes.Role,rolez)    //add to roles of mirosoft system 
 
             };
             SecurityToken securityToken = new JwtSecurityToken(
@@ -69,7 +68,6 @@ namespace OhJwt.Controllers
             return new JwtSecurityTokenHandler().WriteToken(securityToken);
 
         }
-
 
         [HttpGet("GetUserInfo")]
         [Authorize]
