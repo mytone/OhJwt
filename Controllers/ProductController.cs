@@ -10,12 +10,16 @@ namespace OhJwt.Controllers
     [Authorize]
     public class ProductController : Controller
     {
+
+
         [HttpGet("AdminProduct")]
         [Authorize(Roles="Admin")]
         public ActionResult AdminProduct() 
         { 
              return Ok("Admin and Token Access!");
         }
+
+
 
         [HttpGet("MainProduct")]
         [Authorize(Roles = "Main")]

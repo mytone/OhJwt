@@ -28,6 +28,8 @@ public class Startup
         //添加jwt验证：
         services.AddControllers();
 
+
+
         #region
         string secret   = "1235234242384721424214328789";   //token password key  , key must >16 chars
         string issuer   = "mytone";
@@ -37,22 +39,22 @@ public class Startup
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
                         ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret)),
-                        ValidateIssuer = true,     //是否验证颁发者
-                        ValidIssuer = issuer,
-                        ValidateAudience = true,
-                        ValidAudience = audience,
-                        RequireExpirationTime = true,
-                        ValidateLifetime =true,
+                        IssuerSigningKey         = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret)),
+                        ValidateIssuer           = true,          //是否验证颁发者
+                        ValidIssuer              = issuer,
+                        ValidateAudience         = true,
+                        ValidAudience            = audience,
+                        RequireExpirationTime    = true,
+                        ValidateLifetime         = true,
                     };
                 });
         #endregion
 
+
+
         services.AddCors(options => {
             options.AddPolicy("any", builder => { builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader(); });
         });
-
-
 
         // 按照文档，这两个是3.x版的breaking change，要加上
         services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -84,7 +86,7 @@ public class Startup
         app.UseStaticFiles();
         app.UseRouting();
 
-        app.UseAuthentication(); //token
+        app.UseAuthentication();   //token service login
         app.UseAuthorization();
 
         app.UseEndpoints(endpoints =>
